@@ -1,0 +1,30 @@
+BootStrap: library
+From: ubuntu:20.04
+
+%post
+    # update and install essential dependencies
+    apt-get -y update
+    apt-get update && apt-get install -y wget git pip
+    
+    # download, install, and update miniconda3
+    wget https://github.com/conda-forge/miniforge/releases/latest/download/Mambaforge-Linux-x86_64.sh
+    bash Mambaforge-Linux-x86_64.sh -b -f -p /mambaforge/
+    rm Mambaforge-Linux-x86_64.sh
+    
+    # install dependencies via conda
+    export PATH="/mambaforge/bin:$PATH"
+    mamba install python=3.7
+    mamba install -c bioconda ont-tombo
+    mamba install pandas
+    mamba install numpy==1.19.5
+
+%environment
+    # set up all essential environment variables
+    export LC_ALL=C
+    export PATH=/mambaforge/bin:$PATH
+    export PYTHONPATH=/mambaforge/lib/python3.7/:$PYTHONPATH
+
+%labels
+    Author Bhargava Reddy Morampalli
+    Version 1.5.1
+    MyLabel tombo

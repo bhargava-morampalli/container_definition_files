@@ -1,0 +1,11 @@
+bootstrap: shell
+
+# Install Micromamba
+run:
+    - git clone https://github.com/micromamba/micromamba.git
+    - cd micromamba
+    - python3 -m pip install .
+
+# Add Micromamba to the PATH
+environment:
+    PATH: "${PATH}:${SINGULARITY_ROOTFS}/micromamba/bin"

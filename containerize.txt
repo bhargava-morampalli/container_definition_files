@@ -1,0 +1,5 @@
+python3 /home/bhargavam/containerize-conda/conda_to_singularity.py yano.yml yanocomp.sif
+
+docker build -t bhargavam/yanocomp .
+
+docker run -ti bhargavam/yanocomp sh

@@ -1,0 +1,28 @@
+BootStrap: library
+From: ubuntu:20.04
+
+%post
+    # update and install essential dependencies
+    apt-get -y update
+    apt-get update && apt-get install -y wget git dialog
+    
+    # download, install, and update miniconda3
+    wget https://repo.anaconda.com/miniconda/Miniconda3-py39_4.12.0-Linux-x86_64.sh
+    bash Miniconda3-py39_4.12.0-Linux-x86_64.sh -b -f -p /miniconda3/
+    rm Miniconda3-py39_4.12.0-Linux-x86_64.sh
+    
+    # install dependencies via conda
+    export PATH="/miniconda3/bin:$PATH"
+    conda install -n base -f -c conda-forge -c bioconda 'minimap2=2.24'
+    conda install -n base -f -c conda-forge -c bioconda 'samtools=1.16.1'
+
+%environment
+    # set up all essential environment variables
+    export LC_ALL=C
+    export PATH=/miniconda3/bin:$PATH
+    export PYTHONPATH=/miniconda3/lib/python3.9/:$PYTHONPATH
+
+%labels
+    Author Bhargava Reddy Morampalli
+    Version 2.24_1.16.1
+    MyLabel minimap2_samtools

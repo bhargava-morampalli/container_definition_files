@@ -1,0 +1,21 @@
+BootStrap: debootstrap
+OSVersion: focal
+
+%post
+    # update package list and install dependencies
+    apt-get update
+    apt-get install -y git python3 python3-pip
+
+    # clone Micromamba repository and install it
+    git clone https://github.com/micromamba/micromamba.git
+    cd micromamba
+    python3 -m pip install .
+
+    # add Micromamba to the PATH
+    echo 'export PATH="${PATH}:/micromamba/bin"' >> /etc/bash.bashrc
+
+    export PATH=/miniconda3/bin:$PATH
+    export PYTHONPATH=/miniconda3/lib/python3.9/:$PYTHONPATH
+
+        conda install -n base -f -c conda-forge -c bioconda ont-tombo
+    mamba install ont-tombo pandas -n base -c conda-forge -c bioconda

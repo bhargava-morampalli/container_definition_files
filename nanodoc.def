@@ -1,0 +1,30 @@
+BootStrap: library
+From: ubuntu:20.04
+
+%files
+    requirements_new.txt
+
+%post
+    # update and install essential dependencies
+    apt-get -y update
+    apt-get update && apt-get install -y wget git pip
+    
+    # install dependencies via conda
+    git clone https://github.com/uedaLabR/nanoDoc.git  
+    pip install --upgrade pip
+    pip install -r requirements_new.txt
+    cd nanoDoc
+    mkdir weight5mer
+    mv ./weight5mer_1/* ./weight5mer
+    mv ./weight5mer_2/* ./weight5mer
+    rm -r ./weight5mer_*
+    cd src
+
+%environment
+    # set up all essential environment variables
+    export LC_ALL=C
+
+%labels
+    Author Bhargava Reddy Morampalli
+    Version v1.0
+    MyLabel nanodoc
